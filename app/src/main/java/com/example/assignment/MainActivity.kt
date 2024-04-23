@@ -34,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -237,7 +238,8 @@ fun ParentLoginPage(){
                 }
             },
             fontSize = 11.sp,
-            color = Color(0xffbd5683)
+            color = Color(0xffbd5683),
+                modifier = Modifier.clickable {  }
             )
         Spacer(modifier = Modifier.height(50.dp))
 
@@ -256,13 +258,15 @@ fun ParentLoginPage(){
             Spacer(modifier = Modifier.weight(1f))
         }
 
-        Spacer(modifier = Modifier.weight(3f))
+        Spacer(modifier = Modifier.weight(2f))
 
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(1.dp)
-                .background(Color.Gray)
+                .background(Color(0xffbd5683))
+                .blur(10.dp)
+                .shadow(3.dp)
         )
         Spacer(modifier = Modifier.height(15.dp))
 
