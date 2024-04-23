@@ -19,18 +19,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -46,7 +41,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -234,7 +228,7 @@ fun ParentLoginPage(){
             value = password,
             onValueChanged = { password = it }
         )
-        Spacer(modifier = Modifier.height(3.dp))
+        Spacer(modifier = Modifier.height(5.dp))
 
         Text(
             buildAnnotatedString {
@@ -247,19 +241,22 @@ fun ParentLoginPage(){
             )
         Spacer(modifier = Modifier.height(50.dp))
 
-
-        Button(onClick = { /*TODO*/ }, colors = ButtonDefaults.buttonColors(Color(0xffbd5683)), modifier = Modifier
-            .height(45.dp)
-            .width(280.dp)
-            .shadow(elevation = 10.dp,shape = CircleShape)) {
-            Text(text = "Login", fontSize = 16.sp)
+        Row() {
+            Spacer(modifier = Modifier.weight(1f))
+            Button(
+                onClick = { /*TODO*/ },
+                colors = ButtonDefaults.buttonColors(Color(0xffbd5683)),
+                modifier = Modifier
+                    .height(45.dp)
+                    .weight(4f)
+                    .shadow(elevation = 10.dp, shape = CircleShape)
+            ) {
+                Text(text = "Login", fontSize = 16.sp)
+            }
+            Spacer(modifier = Modifier.weight(1f))
         }
 
         Spacer(modifier = Modifier.weight(3f))
-
-
-
-        Spacer(modifier = Modifier.height(15.dp))
 
         Box(
             modifier = Modifier
@@ -308,25 +305,50 @@ fun EditTextField(
     @StringRes label: Int,
     keyboardOptions: KeyboardOptions,
     value: String,
-    onValueChanged: (String) -> Unit,
-) {
-    TextField(
-        modifier = Modifier.border(2.dp, Color(0xffbd5683), CircleShape),
-        value = value,
-        shape = RoundedCornerShape(20.dp),
-        singleLine = true,
-        onValueChange = onValueChanged,
-        textStyle = TextStyle.Default.copy(fontSize = 16.sp),
-        label = { Text(stringResource(label), fontSize = 12.sp, color = Color(0xffbd5683)) },
-        keyboardOptions = keyboardOptions,
-        colors = TextFieldDefaults.colors(
-            cursorColor = Color(0xffbd5683),
-            focusedIndicatorColor = Color(0xffFBE9F0),
-            unfocusedIndicatorColor = Color(0xffFBE9F0),
-            focusedContainerColor = Color(0xffFBE9F0),
-            unfocusedContainerColor = Color(0xffFBE9F0),
-            focusedTextColor = Color(0xff9e446d),
-            unfocusedTextColor = Color(0xff9e446d)
-        )
-    )
+    onValueChanged: (String) -> Unit) {
+    var image = R.drawable.show
+    var show by remember { mutableStateOf(false) }
+
+    Row (verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center){
+        Spacer(modifier = Modifier.weight(1f))
+        Box (
+            modifier = Modifier.weight(4f)
+        ) {
+            TextField(
+                modifier = Modifier.border(2.dp, Color(0xffbd5683), CircleShape),
+                value = value,
+                shape = RoundedCornerShape(20.dp),
+                singleLine = true,
+                onValueChange = onValueChanged,
+                textStyle = TextStyle.Default.copy(fontSize = 16.sp),
+                label = {
+                    Text(
+                        stringResource(label),
+                        fontSize = 12.sp,
+                        color = Color(0xffbd5683)
+                    )
+                },
+                keyboardOptions = keyboardOptions,
+                colors = TextFieldDefaults.colors(
+                    cursorColor = Color(0xffbd5683),
+                    focusedIndicatorColor = Color(0xffFBE9F0),
+                    unfocusedIndicatorColor = Color(0xffFBE9F0),
+                    focusedContainerColor = Color(0xffFBE9F0),
+                    unfocusedContainerColor = Color(0xffFBE9F0),
+                    focusedTextColor = Color(0xff9e446d),
+                    unfocusedTextColor = Color(0xff9e446d)
+                )
+            )
+            if (label == R.string.password) {
+                Image(painter = painterResource(if(show) R.drawable.hide else R.drawable.show), contentDescription = "show",
+                    modifier = Modifier
+                        .size(40.dp)
+                        .padding(top = 5.dp, bottom = 5.dp, end = 15.dp)
+                        .align(Alignment.CenterEnd)
+                        .clickable { show = !show }
+                )
+            }
+        }
+        Spacer(modifier = Modifier.weight(1f))
+    }
 }
